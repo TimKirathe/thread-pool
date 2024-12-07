@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_THREADS 3
-#define MAX_TASKS 5
+#define MAX_THREADS 10
+#define MAX_TASKS 100
 
 typedef struct {
   void (*fn)(void *arg);
@@ -18,9 +18,15 @@ typedef struct {
   int qsize;
   int qfront;
   int qback;
+  int qpos;
   int stop;
 } threadpool;
 
 void *handle_threadpool(void *varg);
+
+void add_task_to_threadpool(threadpool *tp, void (*fn)(void *fn_arg),
+                            void *fn_arg);
+
+void task_function(void *vnum);
 
 int destroy_threadpool(threadpool *tp);
